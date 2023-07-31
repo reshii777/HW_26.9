@@ -1,10 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <thread>
-#include <numeric> // Для std::accumulate
+#include <numeric> // Р”Р»СЏ std::accumulate
 #include <windows.h>
 
-// Функция, которую будет выполнять каждый поток
+// Р¤СѓРЅРєС†РёСЏ, РєРѕС‚РѕСЂСѓСЋ Р±СѓРґРµС‚ РІС‹РїРѕР»РЅСЏС‚СЊ РєР°Р¶РґС‹Р№ РїРѕС‚РѕРє
 void calculateSum(const std::vector<int>& array, size_t start, size_t end, long long& result) {
     result = std::accumulate(array.begin() + start, array.begin() + end, 0LL);
 }
@@ -15,18 +15,18 @@ int main() {
     SetConsoleOutputCP(1251);
     setlocale(LC_ALL, "ru_Ru");
 
-    // Входные данные
+    // Р’С…РѕРґРЅС‹Рµ РґР°РЅРЅС‹Рµ
     size_t N = 20;
     size_t M = 4;
     std::vector<int> array = { 5, 3, 2, 4, 8, 9, 6, 1, 1, 7, 9, 3, 8, 2, 6, 3, 5, 5, 4, 7 };
 
-    // Создание вектора потоков
+    // РЎРѕР·РґР°РЅРёРµ РІРµРєС‚РѕСЂР° РїРѕС‚РѕРєРѕРІ
     std::vector<std::thread> threads;
 
-    // Вектор для хранения результатов вычислений каждого потока
+    // Р’РµРєС‚РѕСЂ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ РІС‹С‡РёСЃР»РµРЅРёР№ РєР°Р¶РґРѕРіРѕ РїРѕС‚РѕРєР°
     std::vector<long long> results(M);
 
-    // Разбиваем массив на части и запускаем потоки
+    // Р Р°Р·Р±РёРІР°РµРј РјР°СЃСЃРёРІ РЅР° С‡Р°СЃС‚Рё Рё Р·Р°РїСѓСЃРєР°РµРј РїРѕС‚РѕРєРё
     size_t chunkSize = N / M;
     size_t remainder = N % M;
     size_t start = 0;
@@ -37,16 +37,16 @@ int main() {
         start = end;
     }
 
-    // Ожидаем завершения всех потоков
+    // РћР¶РёРґР°РµРј Р·Р°РІРµСЂС€РµРЅРёСЏ РІСЃРµС… РїРѕС‚РѕРєРѕРІ
     for (auto& thread : threads) {
         thread.join();
     }
 
-    // Суммируем результаты потоков
+    // РЎСѓРјРјРёСЂСѓРµРј СЂРµР·СѓР»СЊС‚Р°С‚С‹ РїРѕС‚РѕРєРѕРІ
     long long totalSum = std::accumulate(results.begin(), results.end(), 0LL);
 
-    // Вывод результата
-    std::cout << "Результат: " << totalSum << std::endl;
+    // Р’С‹РІРѕРґ СЂРµР·СѓР»СЊС‚Р°С‚Р°
+    std::cout << "Р РµР·СѓР»СЊС‚Р°С‚: " << totalSum << std::endl;
 
     return 0;
 }
